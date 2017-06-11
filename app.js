@@ -11,7 +11,7 @@ var app = express();
 
 var index = require('./routes/index');
 
-app.configure(function () {
+// app.configure(function () {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -23,7 +23,7 @@ app.configure(function () {
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
-});
+// });
 
 setInterval(function(){
     unirest.get('http://www.apilayer.net/api/live?access_key=ad01a85a693bbec76f44fd09e12da448&format=1', function (req) {
