@@ -1,15 +1,15 @@
 var express = require('express');
-var app = express();
+var router = express.Router();
 var fs = require('fs');
 var unirest = require('unirest');
 
-app.get('/', function (req, res) {
+router.get('/', function (req, res) {
   res.render('index', {
     title: 'Express'
   });
 });
 
-app.get('/currencymobile', function (req, res) {
+router.get('/currencymobile', function (req, res) {
   fs.readFile('currency.json', 'utf8', function (err, data) {
     var obj = JSON.parse(data);
     if(err){
@@ -26,7 +26,7 @@ app.get('/currencymobile', function (req, res) {
   });
 });
 
-app.get('/currencyweb', function (req, res) {
+router.get('/currencyweb', function (req, res) {
   console.log('hit route');
   unirest.get('http://www.apilayer.net/api/live?access_key=ad01a85a693bbec76f44fd09e12da448&format=1', function (req) {
     if (req.body.success) {
@@ -50,10 +50,10 @@ app.get('/currencyweb', function (req, res) {
   })
 });
 
-app.get('/working', function (req, res) {
+router.get('/working', function (req, res) {
   res.json({
     success: true
   })
 });
 
-module.exports = app
+module.exports = router

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VITChennaiMakeAThon</title>
+</head>
+<body style="width:100%;height:100%;margin: 0;padding: 0;color: white">
+<img src="/stylesheets/o.jpg" style="width: 100%;height: 100%;position: fixed; z-index: -100">
+
+<h2 style="margin: 0;font-size: 50px ; padding-top: 5% ;width:100%;text-align: center;" id="heading"></h2><br>
+<ul id="ul" style="display: block;width: 100%;margin-left: 40%;font-size: 20px">
+</ul>
+
+
+</body>
+<script>
+
+var ajax = new XMLHttpRequest();
+ajax.open("GET", "http://vitmantra.feedveed.com/indegredient");
+ajax.setRequestHeader("Access-Control-Allow-Origin", "*");
+ajax.onreadystatechange = display;
+
+	function xyz()
+	{	
+		ajax = new XMLHttpRequest();
+		ajax.open("GET", "http://vitmantra.feedveed.com/indegredient");
+		ajax.setRequestHeader("Access-Control-Allow-Origin", "*");
+		ajax.onreadystatechange = display;
+		ajax.send();
+		console.log("sent")
+	}
+
+	function display()
+	{
+		if(ajax.readyState == 4 && ajax.status == 200)
+		{
+			var jsonString = ajax.responseText;
+			var jsonObj = JSON.parse(jsonString);
+			var indegredientString = jsonObj["indegredient"];
+			indegredientString = indegredientString.split(",");
+			document.getElementById("heading").innerHTML = indegredientString[0];
+			var ulStr = "";
+			for(var i=1 ; i<indegredientString.length ; i++)
+			{
+				if(indegredientString[i] == "")
+					continue;
+				var t = "<li>"+indegredientString[i]+"</li>";
+				ulStr+=t;
+			}
+			document.getElementById("ul").innerHTML = ulStr;
+
+			setTimeout(xyz, 1000);
+		}
+	}
+xyz();
+
+
+</script>
+</html>
